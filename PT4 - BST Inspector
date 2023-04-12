@@ -1,0 +1,90 @@
+import java.util.Scanner;
+
+class TreeNode {
+    int val;
+    TreeNode left;
+    TreeNode right;
+    TreeNode(int val) {
+        this.val = val;
+        this.left = null;
+        this.right = null;
+    }
+}
+
+class BinaryTree {
+    TreeNode root;
+    BinaryTree() {
+        root = null;
+    }
+
+    boolean checkIfBST() {
+        return checkIfBST(root, Integer.MIN_VALUE, Integer.MAX_VALUE);
+    }
+
+    boolean checkIfBST(TreeNode node, int minVal, int maxVal) {
+        if (node == null) {
+            return true;
+        }
+        if (node.val <= minVal || node.val >= maxVal) {
+            return false;
+        }
+        return checkIfBST(node.left, minVal, node.val) && checkIfBST(node.right, node.val, maxVal);
+    }
+}
+
+class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        BinaryTree binaryTree1 = new BinaryTree();
+        binaryTree1.root = new TreeNode(5);
+        binaryTree1.root.left = new TreeNode(3);
+        binaryTree1.root.right = new TreeNode(7);
+        binaryTree1.root.left.left = new TreeNode(1);
+        binaryTree1.root.left.right = new TreeNode(4);
+
+        BinaryTree binaryTree2 = new BinaryTree();
+        binaryTree2.root = new TreeNode(5);
+        binaryTree2.root.left = new TreeNode(7);
+        binaryTree2.root.right = new TreeNode(3);
+        binaryTree2.root.left.left = new TreeNode(1);
+        binaryTree2.root.left.right = new TreeNode(4);
+
+        BinaryTree binaryTree3 = new BinaryTree();
+        binaryTree3.root = new TreeNode(5);
+        binaryTree3.root.left = new TreeNode(3);
+        binaryTree3.root.right = new TreeNode(7);
+        binaryTree3.root.right.left = new TreeNode(6);
+        binaryTree3.root.right.right = new TreeNode(8);
+
+        System.out.print("Enter operation: ");
+        int operation = scanner.nextInt();
+
+        switch (operation) {
+            case 1:
+                if (binaryTree1.checkIfBST()) {
+                    System.out.println("IS A BST");
+                } else {
+                    System.out.println("NOT A BST");
+                }
+                break;
+            case 2:
+                if (binaryTree2.checkIfBST()) {
+                    System.out.println("IS A BST");
+                } else {
+                    System.out.println("NOT A BST");
+                }
+                break;
+            case 3:
+                if (binaryTree3.checkIfBST()) {
+                    System.out.println("IS A BST");
+                } else {
+                    System.out.println("NOT A BST");
+                }
+                break;
+            default:
+                System.out.println("Invalid operation");
+                break;
+        }
+    }
+}
