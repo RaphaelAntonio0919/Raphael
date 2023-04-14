@@ -1,0 +1,88 @@
+import java.util.Arrays;
+import java.util.Random;
+import java.util.Scanner;
+
+class HybridQuicksort {
+    private static final int CUTOFF = 10;
+
+    // swap two elements in an array
+    private static void swap(int[] arr, int i, int j) {
+        int temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
+    }
+
+    // partition the subarray a[start...end] using Lomuto partition scheme
+    private static int partition(int[] a, int start, int end) {
+        int pivot = a[end];
+        int i = start - 1;
+
+        for (int j = start; j <= end - 1; j++) {
+            if (a[j] <= pivot) {
+                i++;
+                swap(a, i, j);
+            }
+        }
+
+        swap(a, i + 1, end);
+        return i + 1;
+    }
+
+    // sort the subarray a[start...end] using insertion sort algorithm
+    private static void insertionSort(int[] a, int start, int end) {
+        for (int i = start + 1; i <= end; i++) {
+            int key = a[i];
+            int j = i - 1;
+
+            while (j >= start && a[j] > key) {
+                a[j + 1] = a[j];
+                j--;
+            }
+
+            a[j + 1] = key;
+        }
+    }
+
+    // sort the subarray a[start...end] using Hybrid Quicksort algorithm
+    private static void quicksort(int[] a, int start, int end) {
+        if (end - start + 1 <= CUTOFF) {
+            insertionSort(a, start, end);
+            return;
+        }
+
+        int pivot = partition(a, start, end);
+        quicksort(a, start, pivot - 1);
+        quicksort(a, pivot + 1, end);
+    }
+
+    public static void main(String[] args) {
+        Scanner input = new Scanner(System.in);
+
+        System.out.print("Enter the size of the array: ");
+        int n = input.nextInt();
+
+        int[] a = new int[n];
+
+        System.out.print("Enter 1 to input array or 2 for random array: ");
+        int choice = input.nextInt();
+
+        if (choice == 1) {
+            System.out.println("Enter the elements of the array:");
+            for (int i = 0; i < n; i++) {
+                a[i] = input.nextInt();
+            }
+        } else if (choice == 2) {
+            Random random = new Random();
+            System.out.println("The elements of the array are:");
+            for (int i = 0; i < n; i++) {
+                a[i] = random.nextInt(100);
+            }
+            System.out.println(Arrays.toString(a));
+        }
+
+        quicksort(a, 0, n - 1);
+
+        System.out.println("The sorted array is:");
+        System.out.println(Arrays.toString(a));
+    }
+}
