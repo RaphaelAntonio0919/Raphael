@@ -1,0 +1,93 @@
+import java.util.Scanner;
+
+public class Main {
+    public Node root;
+
+    public Node createNode(int value) {
+        Node node = new Node();
+        node.value = value;
+        node.left = null;
+        node.right = null;
+        return node;
+    }
+
+    public Node insert(Node node, int value) {
+        if (node == null) {
+            return createNode(value);
+        }
+
+        if(value < node.value) {
+            node.left = insert(node.left, value);
+        } 
+        else if(value > node.value) {
+            node.right = insert(node.right, value);
+        }
+        return node;
+    }
+
+    public void inOrder(Node node) {
+        if (node != null) {
+            inOrder(node.left);
+            System.out.print(node.value + " , ");
+            inOrder(node.right);
+        }
+    }
+
+    public static void main(String[] args) {
+        Main bst = new Main();
+
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter operation: ");
+        int operation = sc.nextInt();
+
+        switch(operation) {
+            case 1:
+                bst.insert(bst.root, 8);
+                bst.insert(bst.root, 3);
+                bst.insert(bst.root, 10);
+                bst.insert(bst.root, 1);
+                bst.insert(bst.root, 6);
+                bst.insert(bst.root, 14);
+                bst.insert(bst.root, 4);
+                bst.insert(bst.root, 7);
+                bst.insert(bst.root, 13);
+                bst.insert(bst.root, 11);
+                bst.inOrder(bst.root);
+                break;
+            case 2:
+                bst.insert(bst.root, 16);
+                bst.insert(bst.root, 10);
+                bst.insert(bst.root, 18);
+                bst.insert(bst.root, 8);
+                bst.insert(bst.root, 14);
+                bst.insert(bst.root, 17);
+                bst.insert(bst.root, 19);
+                bst.insert(bst.root, 13);
+                bst.insert(bst.root, 15);
+                bst.insert(bst.root, 12);
+                bst.inOrder(bst.root);
+                break;
+            case 3:
+                bst.insert(bst.root, 16);
+                bst.insert(bst.root, 10);
+                bst.insert(bst.root, 18);
+                bst.insert(bst.root, 8);
+                bst.insert(bst.root, 14);
+                bst.insert(bst.root, 17);
+                bst.insert(bst.root, 19);
+                bst.insert(bst.root, 13);
+                bst.insert(bst.root, 15);
+                bst.insert(bst.root, 12);
+                bst.inOrder(bst.root);
+                break;
+            default:
+                System.out.println("Invalid operation.");
+        }
+    }
+}
+
+class Node {
+    public int value;
+    public Node left;
+    public Node right;
+}
