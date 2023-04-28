@@ -1,0 +1,80 @@
+import java.util.Scanner;
+
+class Node {
+    int data;
+    Node next;
+
+    Node(int data) {
+        this.data = data;
+        next = null;
+    }
+}
+
+class ReverseLinkedList {
+    static Node reverseBetween(Node head, int left, int right) {
+        if (head == null || head.next == null || left == right) {
+            return head;
+        }
+
+        Node dummy = new Node(0);
+        dummy.next = head;
+        Node pre = dummy;
+
+        for (int i = 1; i < left; i++) {
+            pre = pre.next;
+        }
+
+        Node curr = pre.next;
+        Node next = curr.next;
+
+        for (int i = left; i < right; i++) {
+            curr.next = next.next;
+            next.next = pre.next;
+            pre.next = next;
+            next = curr.next;
+        }
+
+        return dummy.next;
+    }
+
+    static void printList(Node head) {
+        while (head != null) {
+            System.out.print(head.data + " ");
+            head = head.next;
+        }
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter the size of the linked list: ");
+        int n = sc.nextInt();
+
+        Node head = null;
+        Node tail = null;
+
+        for (int i = 0; i < n; i++) {
+            System.out.print("Enter element " + (i + 1) + ": ");
+            int data = sc.nextInt();
+            Node newNode = new Node(data);
+
+            if (head == null) {
+                head = newNode;
+                tail = newNode;
+            } else {
+                tail.next = newNode;
+                tail = newNode;
+            }
+        }
+
+        System.out.print("Enter left and right indices (1-indexed): ");
+        int left = sc.nextInt();
+        int right = sc.nextInt();
+
+        head = reverseBetween(head, left, right);
+
+        System.out.print("Linked list after reversing between " + left + " and " + right + ": ");
+        printList(head);
+
+        sc.close();
+    }
+}
